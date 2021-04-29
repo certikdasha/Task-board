@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'logout' %}">Logout</a><br>
+
+    </div>
+
+    <div style="background: red">{{ text }}</div>
+<a href="{% url 'index' %}">Back</a>
+{% endblock %}

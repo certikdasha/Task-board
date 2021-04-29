@@ -1,0 +1,43 @@
+.list{
+    display: flex;
+    border: 2px solid black;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+    height: 90vh;
+
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.list > div{
+    /*height: 100%;*/
+    width: 100%;
+    text-align: center;
+}
+
+.card-1{
+    border-right: 2px solid red;
+}
+
+.card-2{
+    border-right: 2px solid red;
+}
+
+.card-3{
+    border-right: 2px solid red;
+}
+
+.card-4{
+    border-right: 2px solid red;
+}
+
+.card-5{
+    /*border: 2px solid red;*/
+}
+
+.task{
+    border: 2px solid green;
+    border-radius: 5px;
+    margin: 3px;
+}
+
