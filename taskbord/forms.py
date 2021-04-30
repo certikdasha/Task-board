@@ -24,3 +24,7 @@ class CardCreateForm(ModelForm):
 
 
 
+
+
+
+

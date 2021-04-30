@@ -38,8 +38,8 @@
                             <form method="post" action="{% url 'move-card' obj.pk %}">
                                 {% csrf_token %}
                                 {{ form }}
-                                <input style="background-color: green" type="submit" value="Move" name="priv">
-                                <input type="submit" value="Move" name="nextt">
+{#                                <input style="background-color: red" type="submit" value="Priv" name="Move">#}
+                                <input style="background-color: green" type="submit" value="Next" name="Move">
                             </form>
                         </div>
                     {% endif %}
@@ -61,6 +61,12 @@
                                 {% csrf_token %}
                                 <input style="background-color: red" type="submit" value="delete">
                             </form>
+                            <form method="post" action="{% url 'move-card' obj.pk %}">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input style="background-color: red" type="submit" value="Priv" name="Move">
+                                <input style="background-color: green" type="submit" value="Next" name="Move">
+                            </form>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -80,6 +86,12 @@
                             <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
                                 <input style="background-color: red" type="submit" value="delete">
+                            </form>
+                            <form method="post" action="{% url 'move-card' obj.pk %}">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input style="background-color: red" type="submit" value="Priv" name="Move">
+                                <input style="background-color: green" type="submit" value="Next" name="Move">
                             </form>
                         </div>
                     {% endif %}
@@ -101,6 +113,12 @@
                                 {% csrf_token %}
                                 <input style="background-color: red" type="submit" value="delete">
                             </form>
+                            <form method="post" action="{% url 'move-card' obj.pk %}">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input style="background-color: red" type="submit" value="Priv" name="Move">
+                                <input style="background-color: green" type="submit" value="Next" name="Move">
+                            </form>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -120,6 +138,12 @@
                             <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
                                 <input style="background-color: red" type="submit" value="delete">
+                            </form>
+                            <form method="post" action="{% url 'move-card' obj.pk %}">
+                                {% csrf_token %}
+                                {{ form }}
+                                <input style="background-color: red" type="submit" value="Priv" name="Move">
+{#                                <input style="background-color: green" type="submit" value="Move" name="next">#}
                             </form>
                         </div>
                     {% endif %}
