@@ -21,4 +21,5 @@ class Cards(models.Model):
     executor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='executor')
     status = models.IntegerField(choices=STATUS_CHOICE, default=1)
     text = models.TextField()
+    change_time = models.DateTimeField(blank=True, null=True)
 

@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from taskbord.forms import CustomUserCreationForm, CardCreateForm
+from taskbord.forms import CustomUserCreationForm, CardCreateForm, UpdateCardForm
 from taskbord.models import Cards
 
 
@@ -51,24 +51,6 @@ class CardCreateView(LoginRequiredMixin, CreateView):
                 return render(self.request, 'taskbord/wrong.html', {'text': 'only you can be the executor'})
 
 
-class CardUpdateView(LoginRequiredMixin, UpdateView):
-
-    model = Cards
-    fields = ['text']
-    template_name_suffix = '_update_form'
-    success_url = '/'
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        if self.request.user.is_staff:
-            return super().form_valid(form=form)
-        else:
-            if self.object.creator == self.request.user:
-                return super().form_valid(form=form)
-            else:
-                return render(self.request, 'taskbord/wrong.html', {'text': 'You are not a creator'})
-
-
 class DeleteCardView(LoginRequiredMixin, DeleteView):
     model = Cards
     success_url = reverse_lazy('index')
@@ -77,7 +59,6 @@ class DeleteCardView(LoginRequiredMixin, DeleteView):
 class MoveCardView(LoginRequiredMixin, UpdateView):
 
     model = Cards
-    # form_class = MoveCardForm
     fields = ['status']
     success_url = '/'
 
@@ -85,7 +66,7 @@ class MoveCardView(LoginRequiredMixin, UpdateView):
 
         self.object = self.get_object()
         if request.POST['Move'] == 'Next':
-            if self.object.status < 4:
+            if self.object.status < 4 :
                 if request.user.is_staff:
                     return render(self.request, 'taskbord/wrong.html', {'text': 'You can not do this'})
                 else:
@@ -117,9 +98,30 @@ class MoveCardView(LoginRequiredMixin, UpdateView):
         return redirect('/')
 
 
+class CardUpdateView(LoginRequiredMixin, UpdateView):
 
+    model = Cards
+    fields = ['text']
+    template_name_suffix = '_update_form'
+    success_url = '/'
 
+    def get_form(self, form_class=None):
+        if form_class is None:
+            if self.request.user.is_staff:
+                form_class = UpdateCardForm
+            else:
+                form_class = self.get_form_class()
+        return form_class(**self.get_form_kwargs())
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        if self.request.user.is_staff:
+            return super().form_valid(form=form)
+        else:
+            if self.object.creator == self.request.user:
+                return super().form_valid(form=form)
+            else:
+                return render(self.request, 'taskbord/wrong.html', {'text': 'You are not a creator'})
 
 
 

@@ -31,10 +31,12 @@
                             {% if obj.creator == user or user.is_staff %}
                                 <a href={% url "text-update" pk=obj.pk%}>Update</a>
                             {% endif %}
-                            <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                {% csrf_token %}
-                                <input style="background-color: red" type="submit" value="delete">
-                            </form>
+                            {% if user.is_staff %}
+                                <form method="post" action="{% url 'delete-card' obj.pk %}">
+                                    {% csrf_token %}
+                                    <input style="background-color: red" type="submit" value="delete">
+                                </form>
+                            {% endif %}
                             <form method="post" action="{% url 'move-card' obj.pk %}">
                                 {% csrf_token %}
                                 {{ form }}
@@ -57,10 +59,12 @@
                              {% if obj.creator == user or user.is_staff %}
                                 <a href={% url "text-update" pk=obj.pk%}>Update</a>
                             {% endif %}
-                            <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                {% csrf_token %}
-                                <input style="background-color: red" type="submit" value="delete">
-                            </form>
+                            {% if user.is_staff %}
+                                <form method="post" action="{% url 'delete-card' obj.pk %}">
+                                    {% csrf_token %}
+                                    <input style="background-color: red" type="submit" value="delete">
+                                </form>
+                            {% endif %}
                             <form method="post" action="{% url 'move-card' obj.pk %}">
                                 {% csrf_token %}
                                 {{ form }}
@@ -83,10 +87,12 @@
                             {% if obj.creator == user or user.is_staff %}
                                 <a href={% url "text-update" pk=obj.pk%}>Update</a>
                             {% endif %}
-                            <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                {% csrf_token %}
-                                <input style="background-color: red" type="submit" value="delete">
-                            </form>
+                            {% if user.is_staff %}
+                                <form method="post" action="{% url 'delete-card' obj.pk %}">
+                                    {% csrf_token %}
+                                    <input style="background-color: red" type="submit" value="delete">
+                                </form>
+                            {% endif %}
                             <form method="post" action="{% url 'move-card' obj.pk %}">
                                 {% csrf_token %}
                                 {{ form }}
@@ -109,10 +115,12 @@
                             {% if obj.creator == user or user.is_staff %}
                                 <a href={% url "text-update" pk=obj.pk%}>Update</a>
                             {% endif %}
-                            <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                {% csrf_token %}
-                                <input style="background-color: red" type="submit" value="delete">
-                            </form>
+                            {% if user.is_staff %}
+                                <form method="post" action="{% url 'delete-card' obj.pk %}">
+                                    {% csrf_token %}
+                                    <input style="background-color: red" type="submit" value="delete">
+                                </form>
+                            {% endif %}
                             <form method="post" action="{% url 'move-card' obj.pk %}">
                                 {% csrf_token %}
                                 {{ form }}
@@ -135,10 +143,12 @@
                             {% if obj.creator == user or user.is_staff %}
                                 <a href={% url "text-update" pk=obj.pk%}>Update</a>
                             {% endif %}
-                            <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                {% csrf_token %}
-                                <input style="background-color: red" type="submit" value="delete">
-                            </form>
+                            {% if user.is_staff %}
+                                <form method="post" action="{% url 'delete-card' obj.pk %}">
+                                    {% csrf_token %}
+                                    <input style="background-color: red" type="submit" value="delete">
+                                </form>
+                            {% endif %}
                             <form method="post" action="{% url 'move-card' obj.pk %}">
                                 {% csrf_token %}
                                 {{ form }}

@@ -23,7 +23,11 @@ class CardCreateForm(ModelForm):
         exclude = ('creator', 'status')
 
 
+class UpdateCardForm(ModelForm):
 
+    class Meta:
+        model = Cards
+        fields = ['executor', 'text']
 
 
 

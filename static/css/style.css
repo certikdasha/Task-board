@@ -3,14 +3,13 @@
     border: 2px solid black;
     width: 100%;
     border-radius: 5px 5px 5px 5px;
-    height: 90vh;
+    height: 100%;
 
     flex-wrap: nowrap;
     overflow: hidden;
 }
 
 .list > div{
-    /*height: 100%;*/
     width: 100%;
     text-align: center;
 }
