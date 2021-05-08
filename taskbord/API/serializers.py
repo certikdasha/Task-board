@@ -9,7 +9,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'password']
+        fields = ['username', 'password']
 
 
 class CardSerializer(serializers.ModelSerializer):
@@ -27,3 +27,21 @@ class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cards
         fields = ['id', 'creator', 'executor', 'status', 'text', 'change_time']
+
+
+class CardListSerializer(serializers.ModelSerializer):
+    creator = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='username'
+    )
+    executor = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='username'
+    )
+
+    class Meta:
+        model = Cards
+        fields = ['id', 'creator', 'executor', 'change_time']
+

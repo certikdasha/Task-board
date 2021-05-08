@@ -2,12 +2,11 @@ from django.conf.urls import url
 from django.urls import path, include
 from rest_framework import routers
 
-from taskbord.API.resources import UserViewSet, CardCreateAPI, CardsListAPI, DeleteCardAPI, CardViewSet
+from taskbord.API.resources import UserViewSet, CardCreateAPI, DeleteCardAPI, CardViewSet
 from taskbord.views import Login, Register, CardsListView, Logout, CardCreateView, CardUpdateView, DeleteCardView, \
     MoveCardView
 
 router = routers.SimpleRouter()
-router.register(r'users', UserViewSet)
 router.register(r'card', CardViewSet)
 
 
@@ -22,9 +21,8 @@ urlpatterns = [
     path('card/move/<int:pk>/', MoveCardView.as_view(), name='move-card'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path('api/register/', UserViewSet.as_view()),
     path('rest/card-create/', CardCreateAPI.as_view()),
-    path('rest/cards/', CardsListAPI.as_view()),
     path('rest/delete-card/<int:pk>/', DeleteCardAPI.as_view()),
-    # path('rest/update-card/<int:pk>/', CardUpdateAPI.as_view()),
 
 ]

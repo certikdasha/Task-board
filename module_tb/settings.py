@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'taskbord.middlewares.AutoLogout',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -85,7 +86,11 @@ DATABASES = {
         'PASSWORD': 'mypass',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+        'TEST': {
+                'NAME': 'mytestdatabase',
+        },
+    },
+
 }
 
 # Password validation
@@ -136,6 +141,8 @@ AUTH_USER_MODEL = 'taskbord.CustomUser'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+AUTO_LOGOUT_DELAY = 5
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

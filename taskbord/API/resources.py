@@ -1,22 +1,16 @@
 from datetime import datetime
 
-from rest_framework import viewsets, permissions, mixins, status
+from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
-from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, DestroyAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from taskbord.API.serializers import CustomUserSerializer, CardSerializer
+from taskbord.API.serializers import CustomUserSerializer, CardSerializer, CardListSerializer
 from taskbord.models import CustomUser, Cards
 
 
-class CardsListAPI(ListAPIView):
-
-    queryset = Cards.objects.all()
-    serializer_class = CardSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(CreateAPIView):
 
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
@@ -25,6 +19,11 @@ class UserViewSet(viewsets.ModelViewSet):
         instance = serializer.save()
         instance.set_password(instance.password)
         instance.save()
+
+
+class LoginAPIView(APIView):
+    pass
+#
 
 
 class CardCreateAPI(CreateAPIView):
@@ -43,10 +42,8 @@ class CardCreateAPI(CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         return Response(status=status.HTTP_403_FORBIDDEN)
 
-    # проверка
     def perform_create(self, serializer):
         user = self.request.user
-        # serializer.validated_data['creator'] = user
         if user.is_staff:
             serializer.save()
         elif 'executor' not in serializer.validated_data:
@@ -62,27 +59,6 @@ class DeleteCardAPI(DestroyAPIView):
     queryset = Cards.objects.all()
     serializer_class = CardSerializer
     permission_classes = [permissions.IsAdminUser]
-
-
-# class CardUpdateAPI(UpdateAPIView):
-#
-#     queryset = Cards.objects.all()
-#     serializer_class = CardSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-#
-#     # PATCH - ../rest/update-card/ID/
-#     def partial_update(self, request, *args, **kwargs):
-#         kwargs['partial'] = True
-#         user = self.request.user
-#         if user.is_staff:
-#             if 'creator' in request.data or 'status' in request.data:
-#                 return Response(status=status.HTTP_403_FORBIDDEN)
-#             else:
-#                 return self.update(request, *args, **kwargs)
-#         elif user == self.queryset.get(id=kwargs['pk']).creator:
-#             if len(request.data) == 1 and request.data['text']:
-#                 return self.update(request, *args, **kwargs)
-#         return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class CardViewSet(viewsets.ModelViewSet):
@@ -134,11 +110,7 @@ class CardViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def card_list(self, request):
-        '''
-        добавить отображение
-        '''
         queryset = Cards.objects.filter(status=request.data['status'])
-        a = queryset
-        serializer = self.get_serializer(queryset, many=True)
-
+        serializer = CardListSerializer(queryset, many=True)
+        s = serializer.data
         return Response(serializer.data)
