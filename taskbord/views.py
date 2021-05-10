@@ -36,9 +36,20 @@ class CardCreateView(LoginRequiredMixin, CreateView):
     form_class = CardCreateForm
     success_url = '/'
 
-    '''
-        Изменить выбор в выпадашках
-    '''
+    def get_form_kwargs(self):
+        kwargs = {
+            'initial': self.get_initial(),
+            'prefix': self.get_prefix(),
+        }
+
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+                'user': self.request.user,
+            })
+        return kwargs
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.creator = self.request.user
@@ -66,7 +77,7 @@ class MoveCardView(LoginRequiredMixin, UpdateView):
 
         self.object = self.get_object()
         if request.POST['Move'] == 'Next':
-            if self.object.status < 4 :
+            if self.object.status < 4:
                 if request.user.is_staff:
                     return render(self.request, 'taskbord/wrong.html', {'text': 'You can not do this'})
                 else:
@@ -80,7 +91,7 @@ class MoveCardView(LoginRequiredMixin, UpdateView):
                 else:
                     return render(self.request, 'taskbord/wrong.html', {'text': 'You can not do this'})
 
-        elif request.POST['Move'] == 'Priv':
+        elif request.POST['Move'] == 'Previous':
             if self.object.status < 5:
                 if request.user.is_staff:
                     return render(self.request, 'taskbord/wrong.html', {'text': 'You can not do this'})

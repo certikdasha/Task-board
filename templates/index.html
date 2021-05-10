@@ -9,7 +9,6 @@
     <div>
         <form method="post" action="{% url 'create-card' %}">
             {% csrf_token %}
-{#            {{ create_form }}#}
             <input type="submit" value="Add Task">
         </form>
     </div>
@@ -17,148 +16,143 @@
 
 
    <div class="list">
-{#        {% for obj in object_list %}#}
-
-
-            <div class="card-1">
-                <div style="border-bottom: 2px solid black ">New</div>
-                {% for obj in object_list %}
-                    {% if obj.status == 1 %}
-                        <div class="task">
-                            <div>Creator: {{ obj.creator }}</div>
-                            <div>{{ obj.text }}</div>
-                            <div>Executor: {{ obj.executor }}</div>
-                            {% if obj.creator == user or user.is_staff %}
-                                <a href={% url "text-update" pk=obj.pk%}>Update</a>
-                            {% endif %}
-                            {% if user.is_staff %}
-                                <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                    {% csrf_token %}
-                                    <input style="background-color: red" type="submit" value="delete">
-                                </form>
-                            {% endif %}
-                            <form method="post" action="{% url 'move-card' obj.pk %}">
+        <div class="card-1">
+            <div style="border-bottom: 2px solid black ">New</div>
+            {% for obj in object_list %}
+                {% if obj.status == 1 %}
+                    <div class="task">
+                        <div>Creator: {{ obj.creator }}</div>
+                        <div>{{ obj.text }}</div>
+                        <div>Executor: {{ obj.executor }}</div>
+                        {% if obj.creator == user or user.is_staff %}
+                            <a href={% url "text-update" pk=obj.pk%}>Update</a>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
-                                {{ form }}
-{#                                <input style="background-color: red" type="submit" value="Priv" name="Move">#}
-                                <input style="background-color: green" type="submit" value="Next" name="Move">
+                                <input style="background-color: red" type="submit" value="delete">
                             </form>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                        {% endif %}
+                        <form method="post" action="{% url 'move-card' obj.pk %}">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input style="background-color: green" type="submit" value="Next" name="Move">
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-            <div class="card-2">
-                <div style="border-bottom: 2px solid black ">In Progress</div>
-                {% for obj in object_list %}
-                    {% if obj.status == 2 %}
-                        <div class="task">
-                            <div>Creator: {{ obj.creator }}</div>
-                            <div>{{ obj.text }}</div>
-                            <div>Executor: {{ obj.executor }}</div>
-                             {% if obj.creator == user or user.is_staff %}
-                                <a href={% url "text-update" pk=obj.pk%}>Update</a>
-                            {% endif %}
-                            {% if user.is_staff %}
-                                <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                    {% csrf_token %}
-                                    <input style="background-color: red" type="submit" value="delete">
-                                </form>
-                            {% endif %}
-                            <form method="post" action="{% url 'move-card' obj.pk %}">
+        <div class="card-2">
+            <div style="border-bottom: 2px solid black ">In Progress</div>
+            {% for obj in object_list %}
+                {% if obj.status == 2 %}
+                    <div class="task">
+                        <div>Creator: {{ obj.creator }}</div>
+                        <div>{{ obj.text }}</div>
+                        <div>Executor: {{ obj.executor }}</div>
+                         {% if obj.creator == user or user.is_staff %}
+                            <a href={% url "text-update" pk=obj.pk%}>Update</a>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
-                                {{ form }}
-                                <input style="background-color: red" type="submit" value="Priv" name="Move">
-                                <input style="background-color: green" type="submit" value="Next" name="Move">
+                                <input style="background-color: red" type="submit" value="delete">
                             </form>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                        {% endif %}
+                        <form method="post" action="{% url 'move-card' obj.pk %}">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input style="background-color: red" type="submit" value="Previous" name="Move">
+                            <input style="background-color: green" type="submit" value="Next" name="Move">
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-            <div class="card-3">
-                <div style="border-bottom: 2px solid black ">In QA</div>
-                {% for obj in object_list %}
-                    {% if obj.status == 3 %}
-                        <div class="task">
-                            <div>Creator: {{ obj.creator }}</div>
-                            <div>{{ obj.text }}</div>
-                            <div>Executor: {{ obj.executor }}</div>
-                            {% if obj.creator == user or user.is_staff %}
-                                <a href={% url "text-update" pk=obj.pk%}>Update</a>
-                            {% endif %}
-                            {% if user.is_staff %}
-                                <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                    {% csrf_token %}
-                                    <input style="background-color: red" type="submit" value="delete">
-                                </form>
-                            {% endif %}
-                            <form method="post" action="{% url 'move-card' obj.pk %}">
+        <div class="card-3">
+            <div style="border-bottom: 2px solid black ">In QA</div>
+            {% for obj in object_list %}
+                {% if obj.status == 3 %}
+                    <div class="task">
+                        <div>Creator: {{ obj.creator }}</div>
+                        <div>{{ obj.text }}</div>
+                        <div>Executor: {{ obj.executor }}</div>
+                        {% if obj.creator == user or user.is_staff %}
+                            <a href={% url "text-update" pk=obj.pk%}>Update</a>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
-                                {{ form }}
-                                <input style="background-color: red" type="submit" value="Priv" name="Move">
-                                <input style="background-color: green" type="submit" value="Next" name="Move">
+                                <input style="background-color: red" type="submit" value="delete">
                             </form>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                        {% endif %}
+                        <form method="post" action="{% url 'move-card' obj.pk %}">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input style="background-color: red" type="submit" value="Previous" name="Move">
+                            <input style="background-color: green" type="submit" value="Next" name="Move">
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-            <div class="card-4">
-                <div style="border-bottom: 2px solid black ">Ready</div>
-                {% for obj in object_list %}
-                    {% if obj.status == 4 %}
-                        <div class="task">
-                            <div>Creator: {{ obj.creator }}</div>
-                            <div>{{ obj.text }}</div>
-                            <div>Executor: {{ obj.executor }}</div>
-                            {% if obj.creator == user or user.is_staff %}
-                                <a href={% url "text-update" pk=obj.pk%}>Update</a>
-                            {% endif %}
-                            {% if user.is_staff %}
-                                <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                    {% csrf_token %}
-                                    <input style="background-color: red" type="submit" value="delete">
-                                </form>
-                            {% endif %}
-                            <form method="post" action="{% url 'move-card' obj.pk %}">
+        <div class="card-4">
+            <div style="border-bottom: 2px solid black ">Ready</div>
+            {% for obj in object_list %}
+                {% if obj.status == 4 %}
+                    <div class="task">
+                        <div>Creator: {{ obj.creator }}</div>
+                        <div>{{ obj.text }}</div>
+                        <div>Executor: {{ obj.executor }}</div>
+                        {% if obj.creator == user or user.is_staff %}
+                            <a href={% url "text-update" pk=obj.pk%}>Update</a>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
-                                {{ form }}
-                                <input style="background-color: red" type="submit" value="Priv" name="Move">
-                                <input style="background-color: green" type="submit" value="Next" name="Move">
+                                <input style="background-color: red" type="submit" value="delete">
                             </form>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                        {% endif %}
+                        <form method="post" action="{% url 'move-card' obj.pk %}">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input style="background-color: red" type="submit" value="Previous" name="Move">
+                            <input style="background-color: green" type="submit" value="Next" name="Move">
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-            <div class="card-5">
-                <div style="border-bottom: 2px solid black ">Done</div>
-                {% for obj in object_list %}
-                    {% if obj.status == 5 %}
-                        <div class="task">
-                            <div>Creator: {{ obj.creator }}</div>
-                            <div>{{ obj.text }}</div>
-                            <div>Executor: {{ obj.executor }}</div>
-                            {% if obj.creator == user or user.is_staff %}
-                                <a href={% url "text-update" pk=obj.pk%}>Update</a>
-                            {% endif %}
-                            {% if user.is_staff %}
-                                <form method="post" action="{% url 'delete-card' obj.pk %}">
-                                    {% csrf_token %}
-                                    <input style="background-color: red" type="submit" value="delete">
-                                </form>
-                            {% endif %}
-                            <form method="post" action="{% url 'move-card' obj.pk %}">
+        <div class="card-5">
+            <div style="border-bottom: 2px solid black ">Done</div>
+            {% for obj in object_list %}
+                {% if obj.status == 5 %}
+                    <div class="task">
+                        <div>Creator: {{ obj.creator }}</div>
+                        <div>{{ obj.text }}</div>
+                        <div>Executor: {{ obj.executor }}</div>
+                        {% if obj.creator == user or user.is_staff %}
+                            <a href={% url "text-update" pk=obj.pk%}>Update</a>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <form method="post" action="{% url 'delete-card' obj.pk %}">
                                 {% csrf_token %}
-                                {{ form }}
-                                <input style="background-color: red" type="submit" value="Priv" name="Move">
-{#                                <input style="background-color: green" type="submit" value="Move" name="next">#}
+                                <input style="background-color: red" type="submit" value="delete">
                             </form>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                        {% endif %}
+                        <form method="post" action="{% url 'move-card' obj.pk %}">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input style="background-color: red" type="submit" value="Previous" name="Move">
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
    </div>
 

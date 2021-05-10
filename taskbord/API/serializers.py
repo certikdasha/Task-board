@@ -5,7 +5,7 @@ from taskbord.models import CustomUser, Cards
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = CustomUser
@@ -26,7 +26,7 @@ class CardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cards
-        fields = ['id', 'creator', 'executor', 'status', 'text', 'change_time']
+        fields = ['id', 'creator', 'executor', 'status', 'text']
 
 
 class CardListSerializer(serializers.ModelSerializer):
@@ -44,4 +44,5 @@ class CardListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cards
         fields = ['id', 'creator', 'executor', 'change_time']
+
 
